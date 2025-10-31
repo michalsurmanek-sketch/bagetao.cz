@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bagetao.cz – Bagety, sendviče & street food</title>
+
+  <!-- Google Fonts (CZ diakritika) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Roboto','ui-sans-serif','system-ui'] },
+          colors: {
+            brand: {
+              yellow: '#fdc700', // AO žlutá (chutná, energická)
+              red: '#e63946',    // akcent (CTA, odkazuje na kečup/chilli)
+              dark: '#111827'    // text
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0,0,0,.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    .container-tight { max-width: 1120px; }
+    /* Fixní overlay mobilního menu */
+    .mobile-nav { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: none; }
+    .mobile-panel { position: fixed; top: 0; right: 0; width: 85%; max-width: 360px; height: 100%; background: #fff; box-shadow: -8px 0 24px rgba(0,0,0,.15); transform: translateX(100%); transition: transform .25s ease; }
+    .mobile-nav.active { display: block; }
+    .mobile-nav.active .mobile-panel { transform: translateX(0); }
+  </style>
+</head>
+<body class="font-sans text-brand-dark bg-neutral-50">
+  <!-- Header -->
+  <header id="siteHeader" class="sticky top-0 z-50 bg-white/90 backdrop-blur shadow-sm">
+    <div class="mx-auto container-tight px-4">
+      <div class="flex items-center justify-between h-16">
+        <a href="#top" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-brand-yellow grid place-items-center shadow-soft">
+            <!-- jednoduché logo: písmeno B -->
+            <span class="font-black text-brand-dark">B</span>
+          </div>
+          <span class="text-xl font-extrabold tracking-wide">BAGETAO</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="#menu" class="hover:text-brand-red">Menu</a>
+          <a href="#delivery" class="hover:text-brand-red">Rozvoz</a>
+          <a href="#truck" class="hover:text-brand-red">Food truck</a>
+          <a href="#franchise" class="hover:text-brand-red">Franchise</a>
+          <a href="#kontakt" class="hover:text-brand-red">Kontakt</a>
+          <a href="#objednat" class="inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-full hover:opacity-95 transition">
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            Objednat
+          </a>
+        </nav>
+
+        <!-- Hamburger -->
+        <button id="hamburger" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobilní overlay menu (fixní + scrolluje se s obsahem) -->
+    <div id="mobileNav" class="mobile-nav">
+      <div class="mobile-panel p-6 flex flex-col">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-lg font-extrabold">Menu</span>
+          <button id="closeMobile" class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-neutral-200">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <nav class="flex flex-col text-base gap-4">
+          <a href="#menu" class="py-2" data-close>Menu</a>
+          <a href="#delivery" class="py-2" data-close>Rozvoz</a>
+          <a href="#truck" class="py-2" data-close>Food truck</a>
+          <a href="#franchise" class="py-2" data-close>Franchise</a>
+          <a href="#kontakt" class="py-2" data-close>Kontakt</a>
+          <a href="#objednat" class="mt-4 inline-flex items-center gap-2 bg-brand-yellow px-4 py-3 rounded-xl" data-close>
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            Objednat
+          </a>
+        </nav>
+        <div class="mt-auto pt-6 text-sm text-neutral-500">© Bagetao.cz</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-yellow/20 to-transparent"></div>
+    <div class="mx-auto container-tight px-4 py-16 md:py-24 relative">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="text-3xl md:text-5xl font-black leading-tight">Čerstvé bagety, poctivé suroviny, <span class="text-brand-red">rychle</span> k tobě.</h1>
+          <p class="mt-4 text-lg text-neutral-700">Bagetao je vaše lokální bagetárna a street food. Každý den čerstvé pečivo, maso i veggie volby. Vyzvedni u nás, nebo nech dovézt.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#objednat" class="inline-flex items-center gap-2 bg-brand-red text-white px-5 py-3 rounded-xl shadow-soft">
+              <i data-lucide="flashlight" class="w-4 h-4"></i>
+              Rychlá objednávka
+            </a>
+            <a href="#menu" class="inline-flex items-center gap-2 bg-brand-yellow px-5 py-3 rounded-xl">
+              <i data-lucide="sandwich" class="w-4 h-4"></i>
+              Prohlédnout menu
+            </a>
+          </div>
+          <div class="mt-6 flex items-center gap-4 text-sm text-neutral-600">
+            <div class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4"></i> Lokální suroviny</div>
+            <div class="flex items-center gap-2"><i data-lucide="leaf" class="w-4 h-4"></i> Veggie & Vegan</div>
+            <div class="flex items-center gap-2"><i data-lucide="truck" class="w-4 h-4"></i> Rozvoz</div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-soft bg-[url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-soft p-4 flex items-center gap-3">
+            <i data-lucide="clock-3" class="w-5 h-5"></i>
+            <span class="text-sm">Dnes 10:30 – 21:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" class="py-16 md:py-20">
+    <div class="mx-auto container-tight px-4">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl md:text-4xl font-black">Naše bestsellery</h2>
+          <p class="text-neutral-600 mt-2">Křupavé bagety napěchované chutí. Každý kus jde přizpůsobit na míru.</p>
+        </div>
+        <div class="hidden md:flex items-center gap-2">
+          <button class="filter-pill active px-4 py-2 rounded-full border">Vše</button>
+          <button class="filter-pill px-4 py-2 rounded-full border">Maso</button>
+          <button class="filter-pill px-4 py-2 rounded-full border">Veggie</button>
+          <button class="filter-pill px-4 py-2 rounded-full border">Pikantní</button>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <!-- Card 1 -->
+        <article class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col">
+          <div class="aspect-video bg-[url('https://images.unsplash.com/photo-1603048297172-c92544798d5a?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-extrabold text-lg">Bageta Grilované kuře</h3>
+            <p class="text-sm text-neutral-600 mt-1">Kuřecí prso, rajče, okurka, salát, medovo-hořčičný dresink.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="font-bold text-lg">129 Kč</span>
+              <button class="add-btn inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-xl" data-item="Bageta Grilované kuře">
+                <i data-lucide="plus" class="w-4 h-4"></i>Přidat
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col">
+          <div class="aspect-video bg-[url('https://images.unsplash.com/photo-1625944528144-dac44345a1f4?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-extrabold text-lg">Italská Caprese</h3>
+            <p class="text-sm text-neutral-600 mt-1">Mozzarella, rajče, bazalka, olivový olej, pesto.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="font-bold text-lg">119 Kč</span>
+              <button class="add-btn inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-xl" data-item="Italská Caprese">
+                <i data-lucide="plus" class="w-4 h-4"></i>Přidat
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col">
+          <div class="aspect-video bg-[url('https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-extrabold text-lg">BBQ Hovězí pastrami</h3>
+            <p class="text-sm text-neutral-600 mt-1">Pastrami, cheddar, karamelizovaná cibulka, BBQ omáčka.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="font-bold text-lg">159 Kč</span>
+              <button class="add-btn inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-xl" data-item="BBQ Hovězí pastrami">
+                <i data-lucide="plus" class="w-4 h-4"></i>Přidat
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col">
+          <div class="aspect-video bg-[url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-extrabold text-lg">Tuna Fresh</h3>
+            <p class="text-sm text-neutral-600 mt-1">Tuňák, kukuřice, salát, red onion, majonéza.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="font-bold text-lg">129 Kč</span>
+              <button class="add-btn inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-xl" data-item="Tuna Fresh">
+                <i data-lucide="plus" class="w-4 h-4"></i>Přidat
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col">
+          <div class="aspect-video bg-[url('https://images.unsplash.com/photo-1543352634-8730d3c0eaf3?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-extrabold text-lg">Pikantní Chilli Chicken</h3>
+            <p class="text-sm text-neutral-600 mt-1">Kuře, jalapeño, cheddar, chipotle mayo.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="font-bold text-lg">139 Kč</span>
+              <button class="add-btn inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-xl" data-item="Pikantní Chilli Chicken">
+                <i data-lucide="plus" class="w-4 h-4"></i>Přidat
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col">
+          <div class="aspect-video bg-[url('https://images.unsplash.com/photo-1550317138-10000687a72b?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-extrabold text-lg">Veggie Hummus</h3>
+            <p class="text-sm text-neutral-600 mt-1">Hummus, okurka, mrkev, rukola, tahini dresink.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="font-bold text-lg">115 Kč</span>
+              <button class="add-btn inline-flex items-center gap-2 bg-brand-yellow px-4 py-2 rounded-xl" data-item="Veggie Hummus">
+                <i data-lucide="plus" class="w-4 h-4"></i>Přidat
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Info řádek -->
+      <div class="mt-8 grid md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="chef-hat" class="w-5 h-5"></i><span>Vše připravujeme na objednávku</span></div>
+        <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="sparkles" class="w-5 h-5"></i><span>Pečivo křupavé a voňavé</span></div>
+        <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="recycle" class="w-5 h-5"></i><span>Eco balení bez plastu</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rozvoz / objednávky -->
+  <section id="delivery" class="py-16 bg-white">
+    <div class="mx-auto container-tight px-4">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-2xl md:text-4xl font-black">Rozvoz po městě</h2>
+          <p class="mt-3 text-neutral-700">Objednej online – doručíme rychle. Nebo si připrav objednávku k vyzvednutí na čas.</p>
+          <ul class="mt-4 space-y-2 text-neutral-700">
+            <li class="flex gap-2"><i data-lucide="clock" class="w-5 h-5 mt-0.5"></i>Po–Ne 10:30–21:00</li>
+            <li class="flex gap-2"><i data-lucide="map-pin" class="w-5 h-5 mt-0.5"></i>Uherské Hradiště & okolí (doplň dle potřeby)</li>
+            <li class="flex gap-2"><i data-lucide="phone" class="w-5 h-5 mt-0.5"></i>+420 000 000 000</li>
+          </ul>
+          <div id="objednat" class="mt-6 flex flex-wrap gap-3">
+            <a href="#" class="inline-flex items-center gap-2 bg-brand-yellow px-5 py-3 rounded-xl"><i data-lucide="bolt" class="w-4 h-4"></i>Objednat na vyzvednutí</a>
+            <a href="#" class="inline-flex items-center gap-2 bg-black text-white px-5 py-3 rounded-xl"><i data-lucide="bike" class="w-4 h-4"></i>Wolt / Bolt Food</a>
+          </div>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-soft">
+          <iframe title="Mapa provozovny" src="https://maps.google.com/maps?q=Uhersk%C3%A9%20Hradi%C5%A1t%C4%9B&t=&z=12&ie=UTF8&iwloc=&output=embed" class="w-full h-[320px] border-0"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food truck -->
+  <section id="truck" class="py-16 md:py-20">
+    <div class="mx-auto container-tight px-4">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="rounded-3xl overflow-hidden shadow-soft aspect-[4/3] bg-[url('https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+        <div>
+          <h2 class="text-2xl md:text-4xl font-black">Bagetao on Wheels</h2>
+          <p class="mt-3 text-neutral-700">Náš food truck na eventy, festivaly a firemní akce. Propoj s Reklamas.cz a získej pohyblivý billboard s vůní čerstvého pečiva.</p>
+          <div class="mt-5 grid sm:grid-cols-2 gap-3">
+            <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="party-popper" class="w-5 h-5"></i>Festivaly & sport</div>
+            <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="briefcase" class="w-5 h-5"></i>Firemní catering</div>
+            <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="megaphone" class="w-5 h-5"></i>Promo & sampling</div>
+            <div class="bg-white rounded-2xl p-4 shadow-soft flex items-center gap-3"><i data-lucide="users" class="w-5 h-5"></i>Kapacita 300+ porcí/h</div>
+          </div>
+          <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 bg-brand-yellow px-5 py-3 rounded-xl"><i data-lucide="mail" class="w-4 h-4"></i>Poptejte termín</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Franchise -->
+  <section id="franchise" class="py-16 bg-white">
+    <div class="mx-auto container-tight px-4">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-2xl md:text-4xl font-black">Franchise Bagetao Point</h2>
+          <p class="mt-3 text-neutral-700">Zapoj se do AO sítě – malé prodejní okno, nízké náklady, vysoká obratovost. Komplet manuál, receptury, dodavatelský řetězec.</p>
+          <ul class="mt-4 space-y-2 text-neutral-700">
+            <li class="flex gap-2"><i data-lucide="store" class="w-5 h-5 mt-0.5"></i>Koncept 8–15 m²</li>
+            <li class="flex gap-2"><i data-lucide="sprout" class="w-5 h-5 mt-0.5"></i>Start od 250 000 Kč</li>
+            <li class="flex gap-2"><i data-lucide="book-open" class="w-5 h-5 mt-0.5"></i>Provozní manuál & školení</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 bg-brand-red text-white px-5 py-3 rounded-xl"><i data-lucide="handshake" class="w-4 h-4"></i>Mám zájem</a>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-soft aspect-[4/3] bg-[url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recenze -->
+  <section class="py-16 md:py-20">
+    <div class="mx-auto container-tight px-4">
+      <h2 class="text-2xl md:text-4xl font-black">Jak nám chutnáte</h2>
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <figure class="bg-white p-6 rounded-3xl shadow-soft">
+          <figcaption class="font-bold">Lenka</figcaption>
+          <p class="text-neutral-700 mt-2">„Křupavá bageta a plná chuť – ideální oběd do práce. Doporučuju Caprese!“</p>
+        </figure>
+        <figure class="bg-white p-6 rounded-3xl shadow-soft">
+          <figcaption class="font-bold">Martin</figcaption>
+          <p class="text-neutral-700 mt-2">„Pastrami top. Rychlé doručení, teplé a šťavnaté. Beru znovu.“</p>
+        </figure>
+        <figure class="bg-white p-6 rounded-3xl shadow-soft">
+          <figcaption class="font-bold">Verča</figcaption>
+          <p class="text-neutral-700 mt-2">„Veggie hummus je pecka. A taky oceňuju eco balení.“</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section id="kontakt" class="py-16 bg-white">
+    <div class="mx-auto container-tight px-4">
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-2xl md:text-4xl font-black">Kontakt & provozovna</h2>
+          <p class="mt-3 text-neutral-700">Zastav se nebo napiš – rádi poradíme i s cateringem na tvou akci.</p>
+          <div class="mt-5 space-y-3 text-neutral-800">
+            <div class="flex items-start gap-3"><i data-lucide="map-pin" class="w-5 h-5 mt-1"></i>Masarykovo nám., Uherské Hradiště (doplň přesnou adresu)</div>
+            <div class="flex items-start gap-3"><i data-lucide="mail" class="w-5 h-5 mt-1"></i><a href="mailto:info@bagetao.cz" class="underline">info@bagetao.cz</a></div>
+            <div class="flex items-start gap-3"><i data-lucide="phone" class="w-5 h-5 mt-1"></i><a href="tel:+420000000000" class="underline">+420 000 000 000</a></div>
+            <div class="flex items-start gap-3"><i data-lucide="clock-3" class="w-5 h-5 mt-1"></i>Po–Ne 10:30–21:00</div>
+          </div>
+          <form class="mt-6 bg-neutral-50 p-4 rounded-2xl border border-neutral-200 grid gap-3">
+            <div class="grid sm:grid-cols-2 gap-3">
+              <input type="text" placeholder="Jméno" class="px-3 py-3 rounded-xl border outline-none focus:ring-2 focus:ring-brand-yellow">
+              <input type="email" placeholder="E-mail" class="px-3 py-3 rounded-xl border outline-none focus:ring-2 focus:ring-brand-yellow">
+            </div>
+            <textarea rows="4" placeholder="Zpráva" class="px-3 py-3 rounded-xl border outline-none focus:ring-2 focus:ring-brand-yellow"></textarea>
+            <button type="button" class="inline-flex items-center gap-2 bg-brand-yellow px-5 py-3 rounded-xl w-max"><i data-lucide="send" class="w-4 h-4"></i>Odeslat</button>
+          </form>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-soft">
+          <iframe title="Mapa provozovny" src="https://maps.google.com/maps?q=Masarykovo%20n%C3%A1m%C4%9Bst%C3%AD%2C%20Uhersk%C3%A9%20Hradi%C5%A1t%C4%9B&t=&z=13&ie=UTF8&iwloc=&output=embed" class="w-full h-[420px] border-0"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Košík (light prototyp) -->
+  <div id="cart" class="fixed bottom-6 right-6 left-6 sm:left-auto sm:w-[380px] z-40 hidden">
+    <div class="bg-white border border-neutral-200 rounded-2xl shadow-soft p-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="font-extrabold">Košík</div>
+          <div id="cartCount" class="text-sm text-neutral-600">0 položek</div>
+        </div>
+        <button id="closeCart" class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-neutral-200"><i data-lucide="x"></i></button>
+      </div>
+      <div id="cartItems" class="mt-3 space-y-2 text-sm"></div>
+      <div class="mt-4 flex items-center justify-between">
+        <div class="text-lg font-bold"><span id="cartTotal">0</span> Kč</div>
+        <a href="#objednat" class="inline-flex items-center gap-2 bg-brand-red text-white px-4 py-2 rounded-xl"><i data-lucide="shopping-cart"></i>Dokončit objednávku</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-10 bg-neutral-900 text-neutral-300">
+    <div class="mx-auto container-tight px-4">
+      <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-brand-yellow grid place-items-center"><span class="font-black text-brand-dark">B</span></div>
+          <div class="font-extrabold">BAGETAO</div>
+        </div>
+        <nav class="flex flex-wrap gap-4 text-sm">
+          <a href="#menu" class="hover:text-white">Menu</a>
+          <a href="#delivery" class="hover:text-white">Rozvoz</a>
+          <a href="#truck" class="hover:text-white">Food truck</a>
+          <a href="#franchise" class="hover:text-white">Franchise</a>
+          <a href="#kontakt" class="hover:text-white">Kontakt</a>
+        </nav>
+        <div class="text-sm">© <span id="year"></span> Bagetao.cz – Všechna práva vyhrazena</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Ikony
+    lucide.createIcons();
+
+    // Rok ve footeru
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobilní menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeMobile = document.getElementById('closeMobile');
+
+    function openMobile() { mobileNav.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeMobileFn() { mobileNav.classList.remove('active'); document.body.style.overflow = ''; }
+
+    hamburger.addEventListener('click', openMobile);
+    closeMobile.addEventListener('click', closeMobileFn);
+    mobileNav.addEventListener('click', (e) => { if (e.target === mobileNav) closeMobileFn(); });
+    document.querySelectorAll('#mobileNav [data-close]').forEach(a => a.addEventListener('click', closeMobileFn));
+
+    // Lehký košík (pro prototyp)
+    const cart = document.getElementById('cart');
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const closeCart = document.getElementById('closeCart');
+
+    const priceMap = {
+      'Bageta Grilované kuře': 129,
+      'Italská Caprese': 119,
+      'BBQ Hovězí pastrami': 159,
+      'Tuna Fresh': 129,
+      'Pikantní Chilli Chicken': 139,
+      'Veggie Hummus': 115
+    };
+
+    const basket = [];
+
+    function renderCart() {
+      cartItems.innerHTML = '';
+      let total = 0;
+      basket.forEach((item, idx) => {
+        total += priceMap[item] || 0;
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-2';
+        row.innerHTML = `<span>${item}</span><button aria-label="Odebrat" class="text-brand-red" data-remove="${idx}">×</button>`;
+        cartItems.appendChild(row);
+      });
+      cartCount.textContent = `${basket.length} položek`;
+      cartTotal.textContent = total;
+      cart.style.display = basket.length ? 'block' : 'none';
+    }
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.getAttribute('data-item');
+        basket.push(item);
+        renderCart();
+      });
+    });
+
+    cartItems.addEventListener('click', (e) => {
+      const idx = e.target.getAttribute('data-remove');
+      if (idx !== null) {
+        basket.splice(Number(idx), 1);
+        renderCart();
+      }
+    });
+
+    closeCart.addEventListener('click', () => { basket.length = 0; renderCart(); });
+
+    // Přidání stínu při scrollu u headeru (lepší čitelnost)
+    const siteHeader = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      siteHeader.classList.toggle('shadow-md', window.scrollY > 4);
+    });
+  </script>
+</body>
+</html>
